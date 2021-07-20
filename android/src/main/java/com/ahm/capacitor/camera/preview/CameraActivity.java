@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.media.AudioManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ImageFormat;
@@ -743,8 +742,6 @@ public class CameraActivity extends Fragment {
         }
       }
 
-
-      mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
       mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
       mRecorder.setProfile(profile);
       mRecorder.setOutputFile(filePath);
@@ -817,11 +814,6 @@ public class CameraActivity extends Fragment {
     } catch (Exception e) {
       eventListener.onStopRecordVideoError(e.getMessage());
     }
-  }
-
-  public void muteStream(boolean mute, Activity activity) {
-    AudioManager audioManager = ((AudioManager)activity.getApplicationContext().getSystemService(Context.AUDIO_SERVICE));
-    int direction = mute ? audioManager.ADJUST_MUTE : audioManager.ADJUST_UNMUTE;
   }
 
   public void setFocusArea(final int pointX, final int pointY, final Camera.AutoFocusCallback callback) {
