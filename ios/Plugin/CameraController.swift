@@ -31,9 +31,6 @@ class CameraController: NSObject {
     var sampleBufferCaptureCompletionBlock: ((UIImage?, Error?) -> Void)?
 
     var highResolutionOutput: Bool = false
-
-    var audioDevice: AVCaptureDevice?
-    var audioInput: AVCaptureDeviceInput?
 }
 
 extension CameraController {
@@ -62,7 +59,6 @@ extension CameraController {
                     camera.unlockForConfiguration()
                 }
             }
-            self.audioDevice = AVCaptureDevice.default(for: AVMediaType.audio)
         }
 
         func configureDeviceInputs() throws {
@@ -86,16 +82,6 @@ extension CameraController {
                     self.currentCameraPosition = .front
                 }
             } else { throw CameraControllerError.noCamerasAvailable }
-
-            // Add audio input
-            if let audioDevice = self.audioDevice {
-                self.audioInput = try AVCaptureDeviceInput(device: audioDevice)
-                if captureSession.canAddInput(self.audioInput!) {
-                    captureSession.addInput(self.audioInput!)
-                } else {
-                    throw CameraControllerError.inputsAreInvalid
-                }
-            }
         }
 
         func configurePhotoOutput() throws {
